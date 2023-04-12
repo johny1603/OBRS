@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Scheduler for  Mail send-->
+        <record id="ir_cron_customer" model="ir.cron">
+            <field name="name">Client Cron</field>
+            <field name="model_id" ref="model_customer_details"/>
+            <field name="state">code</field>
+            <field name="code">model.send_mail()</field>
+            <field eval="False" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">Minutes</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field name="priority">1000</field>
+        </record>
+
+<!--     <record id="ir_cron_auto_post_draft_entry" model="ir.cron">-->
+<!--        <field name="name">Account; Post draft entries with auto_post set to True up to today</field>-->
+<!--        <field name="interval_number">1</field>-->
+<!--        <field name="interval_type">days</field>-->
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field name="nextcall" eval="(DateTime.now().replace(hour=2, minute=0) + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')" />-->
+<!--        <field name="doall" eval="False"/>-->
+<!--        <field name="model_id" ref="model_account_move"/>-->
+<!--        <field name="code">model._autopost_draft_entries()</field>-->
+<!--        <field name="state">code</field>-->
+<!--    </record>-->
+
+
+
+    </data>
+</odoo>

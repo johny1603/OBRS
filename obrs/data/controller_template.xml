@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        Fetch data customer details in controller-->
+        <template id="cus_details">
+            <t t-call="website.layout">
+                <div class="page" align="center">
+                    <div class="oh_dashboard" style="background-color:Tomato;height:100%">
+                        <i>
+                            <center>CLIENT DETAILS</center>
+                        </i>
+                        <table border="4px" width="60%">
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Dob</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Mail</th>
+                                <th>City</th>
+                            </tr>
+                            <t t-foreach="cus_data" t-as="get">
+                                <tr>
+                                    <td>
+                                        <t t-esc="get['Name']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="get['Phone']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="get['Dob']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="get['Age']"/>
+                                    </td>
+                                    <td t-if="get['Gender'] == 'male'">
+                                        <span t-esc="male">Male</span>
+                                    </td>
+                                    <td t-if="get['Gender'] == 'female'">
+                                        <span t-esc="female">Female</span>
+
+                                    </td>
+                                    <td>
+                                        <t t-esc="get['Mail']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="get['City']"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                        <br/>
+                        <br/>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+
+
+
+
+
+    </data>
+</odoo>

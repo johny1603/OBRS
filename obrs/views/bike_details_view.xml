@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_bike_form" model="ir.ui.view">
+            <field name="name">bike.details.form</field>
+            <field name="model">bikes.details</field>
+            <field name="arch" type="xml">
+                <form string="Bike">
+                    <header>
+                        <button name="action_non_available" type="object"
+                                string="Set Not Available" class="oe_highlight"
+                                attrs="{'invisible':[('bike_status','in',['not_available'])]}"/>
+
+                        <button name="action_available" type="object"
+                                string="Set Available" class="oe_highlight"
+                                attrs="{'invisible':[('bike_status','in',['available'])]}"/>
+                        <field name="bike_status" widget='statusbar' statusbar_visible="not_available, available"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" >
+                            <button name="available_bike" type="object" string="Available Bikes" class="oe_state_button" icon="fa-arrow-right"/>
+                        </div>
+                        <field name="image_123" widget='image' class="oe_avatar"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Bike's Name" required="True"/>
+                            </h1>
+                            <h2>
+                                <field name="model" placeholder="Bike's Model" required="True"/>
+                            </h2>
+                            <h2>
+                                <field name="bike_number" placeholder="Bike number" required="True"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="bike_type" widget="radio" options="{'horizontal': true}"></field>
+                                <field name="fuel_type" widget="radio" options="{'horizontal': true}"></field>
+                                <field name="bike_con"></field>
+                                <field name="current_kilo"></field>
+                            </group>
+                            <group>
+                                <field name="color"></field>
+                                <field name="bike_cc"></field>
+                                <!--                                <field name="bike_status" widget="radio" required="True" options="{'horizontal': true}"></field>-->
+                                <field name="amount_per" string="Amount per day"></field>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--        Bike details tree view-->
+        <record id="view_bike_tree" model="ir.ui.view">
+            <field name="name">bike.details.tree</field>
+            <field name="model">bikes.details</field>
+            <field name="arch" type="xml">
+                <tree string="Bike">
+                    <field name="name"></field>
+                    <field name="model"></field>
+                    <field name="bike_number"></field>
+                    <field name="bike_type"></field>
+                    <field name="fuel_type" optional="hide"></field>
+                    <field name="bike_con" optional="hide"></field>
+                    <field name="color"></field>
+                    <field name="bike_cc" optional="hide"></field>
+                    <field name="bike_status" optional="hide"></field>
+                    <field name="current_kilo"></field>
+                    <field name="image_123" optional="hide"></field>
+                </tree>
+            </field>
+        </record>
+
+        <!--        Kanban View in bike details-->
+
+        <record id='view_bike_kanban' model='ir.ui.view'>
+            <field name="name">bikes.details.kanban</field>
+            <field name="model">bikes.details</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="image_123"/>
+                    <field name="model"/>
+                    <field name="bike_number"/>
+                    <field name="color"/>
+                    <field name="bike_cc"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_vignette oe_semantic_html_override">
+                                <a type="open" href="#" class="o_kanban_image oe_kanban_action">
+                                    <img t-att-src="kanban_image('bikes.details', 'image_123', record.id.raw_value)"
+                                         class="img-fluid" style="width:100px;"/>
+                                </a>
+                                <div class="oe_kanban_details">
+                                    <h4 class="oe_partner_heading">
+                                        <a type="open" class="o_kanban_record_title">
+                                            <strong>
+                                                <field name="name"/>
+                                            </strong>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <field name="bike_number"/>
+                                <div>
+                                    <field name="bike_cc"/>
+                                </div>
+                                <div>
+                                    <field name="color"/>
+                                </div>
+                                <div>
+                                    <field name="model"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_bike_search" model="ir.ui.view">
+            <field name="name">bikes.details.search</field>
+            <field name="model">bikes.details</field>
+            <field name="arch" type="xml">
+                <search string="Search Bikes">
+                    <field name="name" filter_domain="['|',('name', 'ilike', self),('model', 'ilike', self),('fuel_type', 'ilike', self)]"/>
+                    <field name="model"/>
+                    <field name="name"/>
+                    <field name="fuel_type"/>
+                    <separator/>
+                    <filter string="Gear Bike" name="gear_bike" domain="[('bike_type', '=', 'gear_bike')]"/>
+                    <filter string="Scooty" name="scooty" domain="[('bike_type', '=', 'scooty')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Bike" name="name" context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <!--        Actions For bike details-->
+        <record id="action_bike_details" model="ir.actions.act_window">
+            <field name="name">Bike</field>
+            <field name="res_model">bikes.details</field>
+            <field name="view_mode">kanban,tree,form,search</field>
+        </record>
+
+    </data>
+</odoo>

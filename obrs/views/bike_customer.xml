@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_customer_details_form" model="ir.ui.view">
+            <field name="name">customer.details.form</field>
+            <field name="model">customer.details</field>
+            <field name="arch" type="xml">
+                <form string="Customer">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" >
+                            <button name="get_customer" type="object" string="Customer Data" class="oe_state_button" icon="fa-arrow-circle-up"/>
+                            <button name="cus_registration" type="object" string="Registration" class="oe_state_button" icon="fa-angle-double-up"/>
+                        </div>
+                        <group>
+                            <label for="" name="customer_name">
+                                <h1>Customer Details</h1>
+                            </label>
+                        </group>
+                        <field name="upload" widget='image' class="oe_avatar"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Customer's Name" required="True"/>
+                            </h1>
+                            <label for="phone" string="Customer Phone"/>
+                            <h2>
+                                <field name="phone" widget="phone" placeholder="Phone No" required="True" />
+                            </h2>
+                            <label for="mail"/>
+                            <h2>
+                                <field name="mail" widget="email" placeholder="Customer's Mail"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="dob"></field>
+                                <field name="age"></field>
+                                <field name="gender" widget="radio" options="{'horizontal': true}"></field>
+                                <field name="proof" widget="radio" options="{'horizontal': true}"></field>
+                                <field name="dl_no"></field>
+                            </group>
+                            <group>
+                                <label for="" name="address_name">
+                                    <b>Customer Address</b>
+                                </label>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                    <field name="city" placeholder=" City..." class="o_address_city"/>
+                                    <field name="zip_code" placeholder="Zip" class="o_address_zipcode"/>
+                                    <field name="state" placeholder="state" class="o_address_state"/>
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_customer_details_tree" model="ir.ui.view">
+            <field name="name">customer.details.tree</field>
+            <field name="model">customer.details</field>
+            <field name="arch" type="xml">
+                <tree string="Customer">
+                    <field name="name"></field>
+                    <field name="phone"></field>
+                    <field name="age" optional="hide"></field>
+                    <field name="gender"></field>
+                    <field name="mail" optional="hide"></field>
+                    <field name="street" optional="hide"></field>
+                    <field name="city"></field>
+                    <field name="zip_code" optional="hide"></field>
+                    <field name="state"></field>
+                    <field name="dl_no"></field>
+                    <field name="proof"></field>
+                    <field name="upload" optional="hide"></field>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_customer_details" model="ir.actions.act_window">
+            <field name="name">Customer</field>
+            <field name="res_model">customer.details</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

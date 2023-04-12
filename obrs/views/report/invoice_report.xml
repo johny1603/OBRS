@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_book_invoice_document">
+            <!--
+            web.external_layout_standard
+            web.basic_layout
+            web.html_container
+            web.internal_layout
+             -->
+            <t t-call="web.internal_layout">
+                <t t-set="doc" t-value="doc.with_context(lang=doc.customer_id.name)"/>
+                <div class="page">
+                    <div class="oe_structure"/>
+
+                    <h3>
+                        <span>Invoice #</span>
+                        <span t-field="doc.book_seq"/>
+                    </h3>
+                    <h3>
+                        <span>Customer Name:</span>
+                        <span t-field="doc.customer_id.name"/>
+                    </h3>
+
+                    <table align="right">
+                        <tr>
+                            <td></td>
+                            <td>
+                                <h3>Customer Address:</h3>
+                                <span t-field="doc.customer_id.street"/>
+                                <br/>
+                                <span t-field="doc.customer_id.city"/>
+                                <br/>
+                                <span t-field="doc.customer_id.state"/>
+                                <br/>
+                                <span t-field="doc.customer_id.zip_code"/>
+                                <br/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="row mt32 mb32" id="informations">
+                        <div class="col-auto mw-100 mb-2">
+                            <strong>Booking Date:</strong>
+                            <br/>
+                            <strong>Booking Status:</strong>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </div>
+
+                        <div class="col-auto mw-90 mb-2">
+                            <p class="m-0" t-field="doc.booking_date"/>
+                            <p class="m-0" t-field="doc.status"/>
+                        </div>
+                    </div>
+                    <hr style="background-color:gray"></hr>
+                    <table class="table table-sm o_main_table">
+                        <thead>
+                            <tr>
+                                <th name="th_bike" class="text-left">Bike</th>
+                                <th name="th_cost" class="text-right">Cost</th>
+                                <th name="th_days" class="text-right">Days</th>
+                                <th name="th_subtotal" class="text-right">Sub Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+                            <t t-foreach="doc.booking_line_ids" t-as="line">
+                                <tr>
+                                    <t>
+                                        <td name="td_bike">
+                                            <span t-field="line.bike_id"/>
+                                        </td>
+                                        <td name="td_cost" class="text-right">
+                                            <span t-field="line.cost"/>
+                                        </td>
+                                        <td name="td_days" class="text-right">
+                                            <span t-field="line.days"/>
+                                        </td>
+                                        <td name="td_subtotal" class="text-right">
+                                            <span t-field="line.amount"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <div class="clearfix" name="so_total_summary">
+                        <div id="total" class="row" name="total">
+                            <div
+                                    t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                                <table class="table table-sm">
+                                    <tr class="border-black o_total">
+                                        <td name="td_amount_total_label">
+                                            <strong>Total</strong>
+                                        </td>
+                                        <td name="td_amount_total" class="text-right">
+                                            <span t-field="doc.total"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+        <template id="report_book_invoice">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="obrs.report_book_invoice_document"
+                       t-lang="doc.customer_id.name"/>
+                </t>
+            </t>
+        </template>
+
+        <!--        this  is date based report-->
+
+        <template id="booking_date_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <center>
+                            <h4>
+                                Booking Orders
+                            </h4>
+                            <h5>
+                                <t t-esc="data['from_date']"/>
+                                to<t t-esc="data['to_date']"/><![CDATA[&nbsp;]]>
+                            </h5>
+                        </center>
+                        <br/>
+                        <br/>
+                        <table class="table table-striped table-bordered table-hover table-condensed" border="1">
+                            <t t-set="s_no" t-value="1"/>
+                            <thead>
+                                <tr>
+                                    <td>S.No</td>
+                                    <td>Booking Sequence</td>
+                                    <td>Customer Name</td>
+                                    <td>Contact</td>
+                                    <td>Email</td>
+                                    <td>Booking Date</td>
+                                    <td>Total Amount</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="tot" t-value="0"/>
+                                <t t-foreach="get_data" t-as="datum">
+                                    <tr>
+
+                                        <td>
+                                            <t t-esc="s_no"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="datum['book_seq']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="datum['name']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="datum['phone']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="datum['mail']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="datum['booking_date']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="datum['total']"/>
+                                        </td>
+                                    </tr>
+                                    <t t-set="s_no" t-value="s_no+1"/>
+                                    <t t-set="tot" t-value="tot + datum['total']"/>
+                                </t>
+
+                            </tbody>
+                        </table>
+                        <div class="clearfix" name="so_total_summary">
+                            <div>
+                                <div
+                                        t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                                    <table class="table table-sm">
+                                        <tr class="border-black o_total">
+                                            <td>
+                                                <strong>
+                                                    <h1>Total</h1>
+                                                </strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <h1>
+                                                    <t t-esc="tot"/>
+                                                </h1>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

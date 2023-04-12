@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        Fetch data status available bike details in controller-->
+        <template id="bike_information">
+            <t t-call="website.layout">
+                <div class="page" align="center">
+                    <div class="oh_dashboard" style="background-color:green;height:100%">
+                        <i>
+                            <center>BIKE DETAILS</center>
+                        </i>
+                        <table border="4px" width="60%">
+                            <tr>
+                                <th>Name</th>
+                                <th>Model</th>
+                                <th>Bike Number</th>
+                                <th>Bike Type</th>
+                                <th>Status</th>
+                                <th>Color</th>
+                                <th>Bike CC</th>
+                            </tr>
+                            <t t-foreach="bike_data" t-as="get">
+                                <tr>
+                                    <td>
+                                        <t t-esc="get['Name']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="get['Model']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="get['Bike_number']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="get['Bike_type']"/>
+                                    </td>
+                                    <td t-if="get['Bike_status'] == 'available'">
+                                        <span t-esc="available">Available</span>
+                                    </td>
+                                    <td t-if="get['Bike_status'] == 'not_available'">
+                                        <span t-esc="not_available">Non Available</span>
+
+                                    </td>
+                                    <td>
+                                        <t t-esc="get['Color']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="get['Bike_cc']"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                        <br/>
+                        <br/>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

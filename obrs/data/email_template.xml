@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+<!--        <record id="send_mail_template" model="mail.template">-->
+<!--            <field name="name">Client Email Template</field>-->
+<!--            <field name="model_id" ref="obrs.model_customer_details"/>-->
+<!--            <field name="auto_delete" eval="False"/>-->
+<!--            <field name="subject">Client Email Cron Action</field>-->
+<!--            <field name="email_from">johnvip03@gmail.com</field>-->
+<!--            <field name="email_to">${(object.mail)}</field>-->
+<!--            <field name="email_cc">edwinantovj1999@gmail.com</field>-->
+<!--            <field name="body_html" type="html">-->
+<!--                <div style="margin: 0px; padding: 0px;">-->
+<!--                    <p style="margin: 0px; padding: 0px; font-size: 13px;">-->
+<!--                        Dear ${(object.name)},-->
+<!--                        <br/>-->
+<!--                        <br/>-->
+<!--                        Customer Must Be Give Document Before This Two days....-->
+<!--                        <br/>-->
+<!--                    </p>-->
+<!--                    Regards,-->
+<!--                    <br/>-->
+<!--                    ${(object.name)}-->
+<!--                </div>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <!--        This is send mail for booking invoice-->
+        <record id="bike_book_email_template" model="mail.template">
+            <field name="name">Bike booking Invoice Template</field>
+            <field name="email_from">johnvip03@gmail.com</field>
+            <field name="subject">Booking Invoice</field>
+            <field name="email_to">${object.customer_id.mail}</field>
+            <field name="model_id" ref="obrs.model_booking_details"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+				<div style="font-family: "Times New Roman", Times, serif; font-size: 24px; color: rgb(153, 255, 102); background-color: #ff66cc;">
+   					Hello ${(object.customer_id.name)}!! <br/>
+   				    It will raise a invoice summary to customer for booking a bike
+   					Thank you!
+				</div>
+            ]]></field>
+            <field name="report_template" ref="action_book_invoice_report"/>
+            <field name="report_name">Client Booking_${(object.customer_id.name)}</field>
+        </record>
+    </data>
+</odoo>

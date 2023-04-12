@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_payment_details_form" model="ir.ui.view">
+            <field name="name">payment.details.form</field>
+            <field name="model">payment.details</field>
+            <field name="arch" type="xml">
+                <form string="Payment">
+                    <sheet>
+                        <group string="Payment Details">
+                            <group>
+                                <field name="booking_id" options="{'no_create_edit':True}" required="True"></field>
+                                <field name="payment_type" widget="radio" options="{'horizontal': true}"></field>
+                                <field name="payment_date"></field>
+                            </group>
+                            <group>
+                                <field name="payment_status" widget="radio" options="{'horizontal': true}"></field>
+                                <field name="amount" required="True"></field>
+                                <field name="ref_code"></field>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_payment_details_tree" model="ir.ui.view">
+            <field name="name">payment.details.tree</field>
+            <field name="model">payment.details</field>
+            <field name="arch" type="xml">
+                <tree string="Payment">
+                    <field name="booking_id"></field>
+                    <field name="payment_type"></field>
+                    <field name="payment_date" optional="hide"></field>
+                    <field name="payment_status"></field>
+                    <field name="amount" ></field>
+                    <field name="ref_code" optional="hide"></field>
+                </tree>
+            </field>
+        </record>
+        <record id="action_payment_details" model="ir.actions.act_window">
+            <field name="name">Payment</field>
+            <field name="res_model">payment.details</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

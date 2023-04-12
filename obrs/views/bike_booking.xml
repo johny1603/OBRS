@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_booking_details_form" model="ir.ui.view">
+            <field name="name">booking.details.form</field>
+            <field name="model">booking.details</field>
+            <field name="arch" type="xml">
+                <form string="Booking">
+                    <header>
+                         <button name="action_draft" type="object"
+                                string="Draft" class="oe_highlight"
+                                attrs="{'invisible':[('booking_status','in',['draft'])]}" groups="base.group_erp_manager"/>
+
+                         <button name="action_confirm" type="object"
+                                string="Confirmed" class="oe_highlight"
+                                attrs="{'invisible':[('booking_status','in',['confirm', 'cancel'])]}" groups="base.group_erp_manager"/>
+
+                         <button name="action_cancel" type="object"
+                                string="Cancel" class="oe_highlight"
+                                attrs="{'invisible':[('booking_status','in',['cancel', 'received', 'confirm'])]}" groups="base.group_erp_manager"/>
+
+
+                         <field name="booking_status" widget="statusbar" statusbar_visible="draft, confirm, cancel, received"></field>
+                    </header>
+
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" >
+                            <button name="action_send_invoice_mail" type="object" string="Invoice mail" class="oe_state_button" icon="fa-envelope"/>
+                            <button type="action" name="%(action_payment_details)d" string="Go to Pay" icon="fa-arrow-circle-right" class="oe_state_button"  />
+                        </div>
+                        <div class="oe_title">
+                            <h3>
+                                <field name="book_seq"/>
+                            </h3>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="customer_id" options="{'no_create_edit':True}" required="True"></field>
+                                <field name="employee_id" options="{'no_create_edit':True}" required="True"></field>
+                                <field name="booking_date" widget="date"></field>
+                                <field name="taken_date" required="True"></field>
+                                <field name="given_date" required="True"></field>
+                                <field name="booking_status" widget="radio" options="{'horizontal': true}"
+                                       required="True"></field>
+                                <field name="reason" widget="radio" options="{'horizontal': true}" attrs="{'invisible': [('booking_status','=','confirm')]}"></field>
+                                <field name="cancel_date" widget="date" attrs="{'invisible': [('booking_status','=','confirm')]}"></field>
+                                <field name="status" widget="radio" options="{'horizontal': true}" attrs="{'invisible': [('booking_status','=','confirm')]}"></field>
+                            </group>
+                        </group>
+                        <field name="booking_line_ids">
+                            <tree editable="bottom">
+                                <field name="bike_id"/>
+                                <field name="current_meter"/>
+                                <field name="given_meter"/>
+                                <field name="damage"/>
+                                <field name="days"/>
+                                <field name="discount"/>
+                                <field name="cost"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                <label for="total"/>
+                            </div>
+                            <field name="total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"/>
+                        </group>
+                        <div class="oe_clear"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--        Booking tree view used -->
+
+        <record id="view_booking_details_tree" model="ir.ui.view">
+            <field name="name">booking.details.tree</field>
+            <field name="model">booking.details</field>
+            <field name="arch" type="xml">
+                <tree string="Booking">
+                    <field name="book_seq"></field>
+                    <field name="customer_id"></field>
+                    <field name="employee_id"></field>
+                    <field name="booking_date"></field>
+                    <field name="taken_date" optional="hide"></field>
+                    <field name="given_date"></field>
+                    <field name="booking_status" optional="hide"></field>
+                    <field name="reason" optional="hide"></field>
+                    <field name="cancel_date" optional="hide"></field>
+                    <field name="status"></field>
+                    <field name="booking_line_ids" optional="hide"></field>
+                    <field name="total" sum="Total"></field>
+                </tree>
+            </field>
+        </record>
+
+<!--                Calender View Used to Booking-->
+
+        <record id="view_booking_details_calendar" model="ir.ui.view">
+            <field name="name">booking.details.calendar</field>
+            <field name="model">booking.details</field>
+            <field name="arch" type="xml">
+                <calendar string="Booking Request"
+                          date_start="taken_date"
+                          date_stop="given_date"
+                          color="customer_id"
+                          quick_add="False">
+                    <field name="customer_id"/>
+                    <field name="employee_id"/>
+                    <field name="booking_date"/>
+                </calendar>
+            </field>
+        </record>
+
+                <!--        Graph View used in booking -->
+
+        <record model="ir.ui.view" id="view_booking_details_graph">
+            <field name="name">booking.details.graph</field>
+            <field name="model">booking.details</field>
+            <field name="arch" type="xml">
+                <graph string="Bike Booking Statics" type="bar">
+                    <field name="booking_date" interval="day" type="col"/>
+                    <field name="taken_date" type="measure"/>
+                    <field name="given_date" type="measure"/>
+                    <field name="total" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+            <!--        Pivot View Used in booking Table-->
+
+        <record id="view_booking_details_pivot" model="ir.ui.view">
+         <field name="name">booking.details.pivot</field>
+         <field name="model">booking.details</field>
+         <field name="arch" type="xml">
+             <pivot string="booking Statics">
+                 <field name="taken_date" type="row"/>
+                 <field name="given_date" type="col"/>
+                 <field name="booking_date"/>
+                 <field name="total"/>
+             </pivot>
+         </field>
+    </record>
+
+
+        <!--        Booking Action Used-->
+
+        <record id="action_booking_details" model="ir.actions.act_window">
+            <field name="name">Booking</field>
+            <field name="res_model">booking.details</field>
+            <field name="view_mode">tree,form,calendar,graph,pivot</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to Create a New Record.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

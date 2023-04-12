@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- office Master data -->
+
+        <record id="office_data" model="office.details">
+            <field name='name'>JD MotorRental</field>
+            <field name='phone'>9943567887</field>
+            <field name='mail'>info@jdmotorrental.com</field>
+            <field name='street'>1st street,Adayar</field>
+            <field name='city'>Chennai</field>
+            <field name='zip'>600116</field>
+        </record>
+
+        <record id="office_data1" model="office.details">
+            <field name='name'>JD MotorRental</field>
+            <field name='phone'>9943567888</field>
+            <field name='mail'>info@jdmotorrental.com</field>
+            <field name='street'>Meenakshi amman st,periyar bus stand</field>
+            <field name='city'>Madurai</field>
+            <field name='zip'>604789</field>
+        </record>
+
+        <record id="office_data2" model="office.details">
+            <field name='name'>JD MotorRental</field>
+            <field name='phone'>9943567889</field>
+            <field name='mail'>info@jdmotorrental.com</field>
+            <field name='street'>Sivan street,Saravanampatti</field>
+            <field name='city'>Coimbatore</field>
+            <field name='zip'>607559</field>
+        </record>
+
+        <record id="office_data3" model="office.details">
+
+            <field name='name'>JD MotorRental</field>
+            <field name='phone'>9943567886</field>
+            <field name='mail'>info@jdmotorrental.com</field>
+            <field name='street'>1st Main road,Athipatti</field>
+            <field name='city'>Salem</field>
+            <field name='zip'>602604</field>
+        </record>
+
+         <record id="office_data4" model="office.details">
+            <field name='name'>JD MotorRental</field>
+            <field name='phone'>9943567886</field>
+            <field name='mail'>info@jdmotorrental.com</field>
+            <field name='street'>Fort road,kamaraj Nagar</field>
+            <field name='city'>Vellore</field>
+            <field name='zip'>632011</field>
+        </record>
+
+    </data>
+</odoo>

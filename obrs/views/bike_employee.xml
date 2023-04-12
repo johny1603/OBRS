@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_employee_details_form" model="ir.ui.view">
+            <field name="name">employee.details.form</field>
+            <field name="model">employee.details</field>
+            <field name="arch" type="xml">
+                <form string="Employee">
+                    <sheet>
+                            <label for="" name="employee_name">
+                                <h1>Employee</h1>
+                            </label>
+                        <field name="document" widget="image" class="oe_avatar"></field>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Employee Name" required="True"/>
+                            </h1>
+                            <h2>
+                                <field name="phone" placeholder="Mobile No" widget="phone" required="True" />
+                            </h2>
+                            <h2>
+                                <field name="mail" placeholder="Employee's Mail" widget="email" required="True"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="dob"></field>
+                                <field name="gender" widget="radio" options="{'horizontal': true}"></field>
+                            </group>
+                            <group>
+                                <label for="" name="address_name">
+                                    <b>Employee Address</b>
+                                </label>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                    <field name="city" placeholder=" City..." class="o_address_city"/>
+                                    <field name="zip_code" placeholder="Zip" class="o_address_zipcode"/>
+                                    <field name="state" placeholder="state" class="o_address_state"/>
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+            <!--        Tree view for employee Model-->
+
+        <record id="view_employee_details_tree" model="ir.ui.view">
+            <field name="name">employee.details.tree</field>
+            <field name="model">employee.details</field>
+            <field name="arch" type="xml">
+                <tree string="Employee">
+                    <field name="name"></field>
+                    <field name="phone"></field>
+                    <field name="mail"></field>
+                    <field name="dob" optional="hide"></field>
+                    <field name="gender"></field>
+                    <field name="street" optional="hide"></field>
+                    <field name="city"></field>
+                    <field name="zip_code" optional="hide"></field>
+                    <field name="state"></field>
+                    <field name="document" optional="hide"></field>
+                </tree>
+            </field>
+        </record>
+
+                            <!--        Activity View Employee-->
+        <record id="view_employee_details_activity" model="ir.ui.view">
+            <field name="name">employee.details.activity</field>
+            <field name="model">employee.details</field>
+            <field name="arch" type="xml">
+                <activity string="Employee Information">
+                    <templates>
+                        <div t-name="activity-box">
+                            <div>
+                                <field name="name" display="full"/>
+                                <field name="phone" muted="1" display="full"/>
+                                <field name="mail" muted="1" display="full"/>
+                            </div>
+                        </div>
+                    </templates>
+                </activity>
+            </field>
+        </record>
+
+
+
+
+                    <!--Action For employee Table-->
+
+        <record id="action_employee_details" model="ir.actions.act_window">
+            <field name="name">Employee</field>
+            <field name="res_model">employee.details</field>
+            <field name="view_mode">tree,form,activity</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to Create a New Record.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

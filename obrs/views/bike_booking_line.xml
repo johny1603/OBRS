@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_booking_line_form" model="ir.ui.view">
+            <field name="name">booking.line.form</field>
+            <field name="model">booking.line</field>
+            <field name="arch" type="xml">
+                <form string="Booking Line">
+                    <sheet>
+                        <group string="Booking Details">
+                            <group>
+                                <field name="bike_id" options="{'no_create_edit':True}" required="True"></field>
+                                <field name="current_meter"></field>
+                                <field name="given_meter"></field>
+                                <field name="damage" widget="radio" options="{'horizontal': true}" ></field>
+                                <field name="days"></field>
+                                <field name="cost"></field>
+                            </group>
+                            <group>
+                                <field name="discount" attrs="{'invisible': [('damage','=','yes')]}"></field>
+                                <field name="amount"></field>
+                                <field name="booking_id" options="{'no_create_edit':True}"></field>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_booking_line_tree" model="ir.ui.view">
+            <field name="name">booking.line.tree</field>
+            <field name="model">booking.line</field>
+            <field name="arch" type="xml">
+                <tree string="Booking">
+                    <field name="bike_id"></field>
+                    <field name="current_meter"></field>
+                    <field name="given_meter"></field>
+                    <field name="damage" optional="hide"></field>
+                    <field name="days" optional="hide"></field>
+                    <field name="discount" optional="hide"></field>
+                    <field name="amount"></field>
+                    <field name="booking_id" optional="hide"></field>
+                </tree>
+            </field>
+        </record>
+        <record id="action_booking_line" model="ir.actions.act_window">
+            <field name="name">Booking</field>
+            <field name="res_model">booking.line</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

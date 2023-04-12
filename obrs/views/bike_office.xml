@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--     Company   -->
+        <record id="view_office_details_form" model="ir.ui.view">
+            <field name="name">office.details.form</field>
+            <field name="model">office.details</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Office Details">
+                            <group>
+                                <field name="name" required="True"/>
+                                <field name="phone" widget="phone"/>
+                                <field name="mail" widget="mail"/>
+                            </group>
+                        </group>
+                        <group col="2">
+                            <group>
+                                <div class="o_address_format">
+                                    <label for="" name="address_name">
+                                        <b>Address</b>
+                                    </label>
+                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State"/>
+                                    <field name="zip" placeholder="ZIP CODE" class="o_address_zip"/>
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_office_details_tree" model="ir.ui.view">
+            <field name="name">office.details.tree</field>
+            <field name="model">office.details</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="mail"/>
+                    <field name="street"/>
+                    <field name="city"/>
+                    <field name="state_id"/>
+                    <field name="zip"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_office_details_search" model="ir.ui.view">
+            <field name="name">office.details.search</field>
+            <field name="model">office.details</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="mail"/>
+                    <field name="city"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_office_details" model="ir.actions.act_window">
+            <field name="name">Office</field>
+            <field name="res_model">office.details</field>
+            <field name="view_mode">tree,form,search</field>
+        </record>
+    </data>
+</odoo>
